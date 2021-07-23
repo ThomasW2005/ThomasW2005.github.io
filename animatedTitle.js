@@ -7,7 +7,7 @@ function animateTitle(Title = "Hello, World!", delay = 300) {
         if (counter == false)
             direction = true;
         counter = (direction == true) ? ++counter : --counter;
-        newtitle = (counter == 0) ? "" : Title.slice(0, counter);
+        newtitle = (counter == 0) ? "⠀" : Title.slice(0, counter);
         document.title = newtitle;
     }, delay)
 }
