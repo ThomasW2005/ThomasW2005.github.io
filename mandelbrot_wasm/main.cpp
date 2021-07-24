@@ -13,15 +13,8 @@ v3.3
 #include <emscripten.h>
 #endif
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
-
-double map(double x, double in_min, double in_max, double out_min, double out_max)
-{
-    return (double)(x - in_min) * (out_max - out_min) / (double)(in_max - in_min) + out_min;
-}
-
-void game();
+#define WINDOW_WIDTH 640
+#define WINDOW_HEIGHT 320
 
 SDL_Renderer *renderer;
 SDL_Window *window;
@@ -37,33 +30,105 @@ double middleY = -0.00451104455560013759;
 double rangeX = 3.5;
 double rangeY = 2;
 
-int main(int argc, char **argv)
+#ifdef __cplusplus
+extern "C"
 {
-
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) != 0)
-    {
-        std::cerr << "Error\n";
-        return -1;
-    }
-    SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, 0, &window, &renderer);
-    sprintf(title, "SPF: X s | %d Iterations | Rel = %f, Img = %f | x = %f y = %f | H for Help", max_iterations, rangeX, rangeY, middleX, middleY);
-    SDL_SetWindowTitle(window, title);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xff);
-    SDL_RenderClear(renderer);
-    SDL_RenderPresent(renderer);
-#ifdef __EMSCRIPTEN__
-    emscripten_set_main_loop(game, 0, 1);
-#else
-    while (run)
-        game();
 #endif
-    SDL_Log("SDL quit after %i ticks", event.quit.timestamp);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-    return 0;
-}
 
+#ifdef __EMSCRIPTEN__
+    EMSCRIPTEN_KEEPALIVE void decIterations()
+#else
+void decIterations()
+#endif
+    {
+        int max_iterations_temp = 0;
+        int max_iterations_temp2 = 0;
+        max_iterations_temp = max_iterations * 0.9;
+        if (max_iterations == max_iterations_temp)
+            max_iterations--;
+        else
+            max_iterations = max_iterations_temp;
+    }
+#ifdef __EMSCRIPTEN__
+    EMSCRIPTEN_KEEPALIVE void incIterations()
+#else
+void incIterations()
+#endif
+    {
+        int max_iterations_temp = 0;
+        int max_iterations_temp2 = 0;
+        max_iterations_temp2 = max_iterations / 0.9;
+        if (max_iterations == max_iterations_temp2)
+            max_iterations++;
+        else
+            max_iterations = max_iterations_temp2;
+    }
+#ifdef __EMSCRIPTEN__
+    EMSCRIPTEN_KEEPALIVE void changeColor()
+#else
+void changeColor()
+#endif
+    {
+        coloring = coloring >= 2 ? 0 : coloring + 1;
+    }
+#ifdef __EMSCRIPTEN__
+    EMSCRIPTEN_KEEPALIVE void w()
+#else
+void w()
+#endif
+    {
+        middleY -= 0.1 * rangeY;
+    }
+#ifdef __EMSCRIPTEN__
+    EMSCRIPTEN_KEEPALIVE void a()
+#else
+void a()
+#endif
+    {
+        middleX -= 0.1 * rangeX;
+    }
+#ifdef __EMSCRIPTEN__
+    EMSCRIPTEN_KEEPALIVE void s()
+#else
+void s()
+#endif
+    {
+        middleY += 0.1 * rangeY;
+    }
+#ifdef __EMSCRIPTEN__
+    EMSCRIPTEN_KEEPALIVE void d()
+#else
+void d()
+#endif
+    {
+        middleX += 0.1 * rangeX;
+    }
+#ifdef __EMSCRIPTEN__
+    EMSCRIPTEN_KEEPALIVE void zoomPlus()
+#else
+void zoomPlus()
+#endif
+    {
+        rangeX *= 0.8;
+        rangeY *= 0.8;
+    }
+#ifdef __EMSCRIPTEN__
+    EMSCRIPTEN_KEEPALIVE void zoomMinus()
+#else
+void zoomMinus()
+#endif
+    {
+        rangeX /= 0.8;
+        rangeY /= 0.8;
+    }
+#ifdef __cplusplus
+}
+#endif
+
+double map(double x, double in_min, double in_max, double out_min, double out_max)
+{
+    return (double)(x - in_min) * (out_max - out_min) / (double)(in_max - in_min) + out_min;
+}
 void game()
 {
     int iteration;
@@ -120,70 +185,32 @@ void game()
     SDL_SetWindowTitle(window, title);
 
     SDL_RenderPresent(renderer);
-    int max_iterations_temp = 0;
-    int max_iterations_temp2 = 0;
 
     while (SDL_PollEvent(&event))
     {
         switch (event.type)
         {
         case SDL_KEYDOWN:
-            // if (GetAsyncKeyState('W') & 0x8000)
-            //     middleY -= 0.1 * rangeY;
-            // if (GetAsyncKeyState('A') & 0x8000)
-            //     middleX -= 0.1 * rangeX;
-            // if (GetAsyncKeyState('S') & 0x8000)
-            //     middleY += 0.1 * rangeY;
-            // if (GetAsyncKeyState('D') & 0x8000)
-            //     middleX += 0.1 * rangeX;
-            // if (GetAsyncKeyState('Q') & 0x8000)
-            // {
-            //     max_iterations_temp = max_iterations * 0.9;
-            //     if (max_iterations == max_iterations_temp)
-            //         max_iterations--;
-            //     else
-            //         max_iterations = max_iterations_temp;
-            // }
-            // if (GetAsyncKeyState('E') & 0x8000)
-            // {
-            //     max_iterations_temp2 = max_iterations / 0.9;
-            //     if (max_iterations == max_iterations_temp2)
-            //         max_iterations++;
-            //     else
-            //         max_iterations = max_iterations_temp2;
-            // }
             switch (event.key.keysym.scancode)
             {
             case SDL_SCANCODE_W:
-                middleY -= 0.1 * rangeY;
+                w();
                 break;
             case SDL_SCANCODE_A:
-                middleX -= 0.1 * rangeX;
+                a();
                 break;
             case SDL_SCANCODE_S:
-                middleY += 0.1 * rangeY;
+                s();
                 break;
             case SDL_SCANCODE_D:
-                middleX += 0.1 * rangeX;
+                d();
                 break;
             case SDL_SCANCODE_Q:
-            {
-                max_iterations_temp = max_iterations * 0.9;
-                if (max_iterations == max_iterations_temp)
-                    max_iterations--;
-                else
-                    max_iterations = max_iterations_temp;
+                decIterations();
                 break;
-            }
             case SDL_SCANCODE_E:
-            {
-                max_iterations_temp2 = max_iterations / 0.9;
-                if (max_iterations == max_iterations_temp2)
-                    max_iterations++;
-                else
-                    max_iterations = max_iterations_temp2;
+                incIterations();
                 break;
-            }
             case SDL_SCANCODE_H:
                 SDL_ShowSimpleMessageBox(0, "Help", "WASD to move around\nQ/E to change Iterations\nMousewheel to Zoom\nC to change Coloring\nX to Screenshot\nEscape to Quit", window);
                 break;
@@ -191,7 +218,7 @@ void game()
                 run = 0;
                 break;
             case SDL_SCANCODE_C:
-                coloring = coloring >= 2 ? 0 : coloring + 1;
+                changeColor();
                 break;
             case SDL_SCANCODE_X:
             {
@@ -207,15 +234,9 @@ void game()
             break;
         case SDL_MOUSEWHEEL:
             if (event.wheel.y > 0)
-            {
-                rangeX *= 0.8;
-                rangeY *= 0.8;
-            }
+                zoomPlus();
             else if (event.wheel.y < 0)
-            {
-                rangeX /= 0.8;
-                rangeY /= 0.8;
-            }
+                zoomMinus();
             break;
         case SDL_QUIT:
             run = 0;
@@ -225,3 +246,54 @@ void game()
         }
     }
 }
+
+int main(int argc, char **argv)
+{
+
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) != 0)
+    {
+        std::cerr << "Error\n";
+        return -1;
+    }
+    SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, 0, &window, &renderer);
+    sprintf(title, "SPF: X s | %d Iterations | Rel = %f, Img = %f | x = %f y = %f | H for Help", max_iterations, rangeX, rangeY, middleX, middleY);
+    SDL_SetWindowTitle(window, title);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xff);
+    SDL_RenderClear(renderer);
+    SDL_RenderPresent(renderer);
+#ifdef __EMSCRIPTEN__
+    emscripten_set_main_loop(game, 0, 1);
+#else
+    while (run)
+        game();
+#endif
+    SDL_Log("SDL quit after %i ticks", event.quit.timestamp);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+    return 0;
+}
+
+//   <!-- custom -->
+//   <button id="incIterations">Increase Iterations</button>
+//   <button id="decIterations">Decrease Iterations</button>
+//   <button id="changeColor">Change Coloring</button>
+//   <button id="w">↑</button>
+//   <button id="a">←</button>
+//   <button id="s">↓</button>
+//   <button id="d">→</button>
+//   <button id="zoomPlus">Zoom +</button>
+//   <button id="zoomMinus">Zoom -</button>
+
+//   <script>
+//     document.getElementById("incIterations").addEventListener('click', function () { Module.ccall('incIterations', null, null, null); });
+//     document.getElementById("decIterations").addEventListener('click', function () { Module.ccall('decIterations', null, null, null); });
+//     document.getElementById("changeColor").addEventListener('click', function () { Module.ccall('changeColor', null, null, null); });
+//     document.getElementById("zoomMinus").addEventListener('click', function () { Module.ccall('zoomMinus', null, null, null); });
+//     document.getElementById("zoomPlus").addEventListener('click', function () { Module.ccall('zoomPlus', null, null, null); });
+//     document.getElementById("w").addEventListener('click', function () { Module.ccall('w', null, null, null); });
+//     document.getElementById("a").addEventListener('click', function () { Module.ccall('a', null, null, null); });
+//     document.getElementById("s").addEventListener('click', function () { Module.ccall('s', null, null, null); });
+//     document.getElementById("d").addEventListener('click', function () { Module.ccall('d', null, null, null); });
+//   </script>
+//   <!-- custom end -->

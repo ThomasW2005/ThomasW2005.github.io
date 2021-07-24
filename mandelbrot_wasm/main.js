@@ -8911,6 +8911,51 @@ var ___wasm_call_ctors = Module["___wasm_call_ctors"] = function() {
 };
 
 /** @type {function(...*):?} */
+var _decIterations = Module["_decIterations"] = function() {
+  return (_decIterations = Module["_decIterations"] = Module["asm"]["decIterations"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _incIterations = Module["_incIterations"] = function() {
+  return (_incIterations = Module["_incIterations"] = Module["asm"]["incIterations"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _changeColor = Module["_changeColor"] = function() {
+  return (_changeColor = Module["_changeColor"] = Module["asm"]["changeColor"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _w = Module["_w"] = function() {
+  return (_w = Module["_w"] = Module["asm"]["w"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _a = Module["_a"] = function() {
+  return (_a = Module["_a"] = Module["asm"]["a"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _s = Module["_s"] = function() {
+  return (_s = Module["_s"] = Module["asm"]["s"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _d = Module["_d"] = function() {
+  return (_d = Module["_d"] = Module["asm"]["d"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _zoomPlus = Module["_zoomPlus"] = function() {
+  return (_zoomPlus = Module["_zoomPlus"] = Module["asm"]["zoomPlus"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
+var _zoomMinus = Module["_zoomMinus"] = function() {
+  return (_zoomMinus = Module["_zoomMinus"] = Module["asm"]["zoomMinus"]).apply(null, arguments);
+};
+
+/** @type {function(...*):?} */
 var _main = Module["_main"] = function() {
   return (_main = Module["_main"] = Module["asm"]["main"]).apply(null, arguments);
 };
@@ -8986,6 +9031,7 @@ var dynCall_iiiiiijj = Module["dynCall_iiiiiijj"] = function() {
 
 // === Auto-generated postamble setup entry stuff ===
 
+Module["ccall"] = ccall;
 Module["addRunDependency"] = addRunDependency;
 Module["removeRunDependency"] = removeRunDependency;
 Module["FS_createPath"] = FS.createPath;
