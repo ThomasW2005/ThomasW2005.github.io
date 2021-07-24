@@ -8,6 +8,7 @@ v3.3
 #include <SDL.h>
 #include <iostream>
 #include <chrono>
+#include <cmath>
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif
@@ -184,7 +185,7 @@ void game()
                 break;
             }
             case SDL_SCANCODE_H:
-                SDL_ShowSimpleMessageBox(NULL, "Help", "WASD to move around\nQ/E to change Iterations\nMousewheel to Zoom\nC to change Coloring\nX to Screenshot\nEscape to Quit", window);
+                SDL_ShowSimpleMessageBox(0, "Help", "WASD to move around\nQ/E to change Iterations\nMousewheel to Zoom\nC to change Coloring\nX to Screenshot\nEscape to Quit", window);
                 break;
             case SDL_SCANCODE_ESCAPE:
                 run = 0;
