@@ -14,8 +14,8 @@ v3.3
 #include <emscripten.h>
 #endif
 
-#define WINDOW_WIDTH 640
-#define WINDOW_HEIGHT 320
+#define WINDOW_WIDTH 640 * 2
+#define WINDOW_HEIGHT 320 * 2
 
 SDL_Renderer *renderer;
 SDL_Window *window;
