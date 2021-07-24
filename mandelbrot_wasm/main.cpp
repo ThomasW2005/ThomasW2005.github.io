@@ -14,8 +14,8 @@ v3.3
 #include <emscripten.h>
 #endif
 
-#define WINDOW_WIDTH 640 * 2
-#define WINDOW_HEIGHT 320 * 2
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 400
 
 SDL_Renderer *renderer;
 SDL_Window *window;
@@ -204,7 +204,7 @@ void game()
             document.getElementById("_rangex").innerText = $2.toFixed(10);
             document.getElementById("_rangey").innerText = $3.toFixed(10);
             document.getElementById("_middlex").innerText = $4.toFixed(10);
-            document.getElementById("_middely").innerText = $5.toFixed(10);
+            document.getElementById("_middley").innerText = $5.toFixed(10);
         },
         span.count(), max_iterations, rangeX, rangeY, middleX, middleY);
 
