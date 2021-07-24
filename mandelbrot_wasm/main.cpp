@@ -9,6 +9,7 @@ v3.3
 #include <iostream>
 #include <chrono>
 #include <cmath>
+#include <string>
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif
@@ -121,6 +122,18 @@ void zoomMinus()
         rangeX /= 0.8;
         rangeY /= 0.8;
     }
+#ifdef __EMSCRIPTEN__
+    EMSCRIPTEN_KEEPALIVE std::string getTitle()
+#else
+std::string getTitle()
+#endif
+    {
+        char title[200] = {0};
+        sprintf(title, "SPF: X s | %d Iterations | Rel = %f, Img = %f | x = %f y = %f | H for Help", max_iterations, rangeX, rangeY, middleX, middleY);
+        std::string s(title);
+        return s;
+    }
+
 #ifdef __cplusplus
 }
 #endif
@@ -129,6 +142,7 @@ double map(double x, double in_min, double in_max, double out_min, double out_ma
 {
     return (double)(x - in_min) * (out_max - out_min) / (double)(in_max - in_min) + out_min;
 }
+
 void game()
 {
     int iteration;
@@ -182,6 +196,19 @@ void game()
     std::chrono::duration<double> span = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
     sprintf(title, "SPF: %f s | %d Iterations | Rel = %.20lf, Img = %.20lf | x = %.20lf y = %.20lf | H for Help", span.count(), max_iterations, rangeX, rangeY, middleX, middleY);
     std::cout << title << std::endl; //Rel = 0.00000219698560738535, Img = 0.00000125542034707734 | x = -1.71102468159729359520 y = -0.00451104455560013759
+#ifdef __EMSCRIPTEN__
+    EM_ASM(
+        {
+            document.getElementById("_spf").innerText = $0.toFixed(5);
+            document.getElementById("_iterations").innerText = $1;
+            document.getElementById("_rangex").innerText = $2.toFixed(10);
+            document.getElementById("_rangey").innerText = $3.toFixed(10);
+            document.getElementById("_middlex").innerText = $4.toFixed(10);
+            document.getElementById("_middely").innerText = $5.toFixed(10);
+        },
+        span.count(), max_iterations, rangeX, rangeY, middleX, middleY);
+
+#endif
     SDL_SetWindowTitle(window, title);
 
     SDL_RenderPresent(renderer);
@@ -273,27 +300,3 @@ int main(int argc, char **argv)
     SDL_Quit();
     return 0;
 }
-
-//   <!-- custom -->
-//   <button id="incIterations">Increase Iterations</button>
-//   <button id="decIterations">Decrease Iterations</button>
-//   <button id="changeColor">Change Coloring</button>
-//   <button id="w">↑</button>
-//   <button id="a">←</button>
-//   <button id="s">↓</button>
-//   <button id="d">→</button>
-//   <button id="zoomPlus">Zoom +</button>
-//   <button id="zoomMinus">Zoom -</button>
-
-//   <script>
-//     document.getElementById("incIterations").addEventListener('click', function () { Module.ccall('incIterations', null, null, null); });
-//     document.getElementById("decIterations").addEventListener('click', function () { Module.ccall('decIterations', null, null, null); });
-//     document.getElementById("changeColor").addEventListener('click', function () { Module.ccall('changeColor', null, null, null); });
-//     document.getElementById("zoomMinus").addEventListener('click', function () { Module.ccall('zoomMinus', null, null, null); });
-//     document.getElementById("zoomPlus").addEventListener('click', function () { Module.ccall('zoomPlus', null, null, null); });
-//     document.getElementById("w").addEventListener('click', function () { Module.ccall('w', null, null, null); });
-//     document.getElementById("a").addEventListener('click', function () { Module.ccall('a', null, null, null); });
-//     document.getElementById("s").addEventListener('click', function () { Module.ccall('s', null, null, null); });
-//     document.getElementById("d").addEventListener('click', function () { Module.ccall('d', null, null, null); });
-//   </script>
-//   <!-- custom end -->
