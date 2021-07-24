@@ -7,8 +7,10 @@ v3.3
 
 #include <SDL.h>
 #include <iostream>
-#include <emscripten.h>
 #include <chrono>
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
@@ -48,21 +50,18 @@ int main(int argc, char **argv)
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xff);
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
-
+#ifdef __EMSCRIPTEN__
     emscripten_set_main_loop(game, 0, 1);
-
-    // while (run)
-    // {
-    //     game();
-    // }
+#else
+    while (run)
+        game();
+#endif
     SDL_Log("SDL quit after %i ticks", event.quit.timestamp);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
     return 0;
 }
-
-// buildcmd: em++ .\sdltest.c -s WASM=1 -s FORCE_FILESYSTEM=1 -s USE_SDL=2 -s ALLOW_MEMORY_GROWTH=1 -o main.html
 
 void game()
 {
