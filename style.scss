@@ -16,7 +16,15 @@ main {
   animation: rotateAngle 6s linear infinite;
 }
 
-button {
+.but{
+  text-decoration:none;
+  text-align:center; 
+  color: inherit;
+  // vertical-align:middle;
+}
+
+button, .but {
+
   display: block;
   position: relative;
   margin: 0.5em 0;
