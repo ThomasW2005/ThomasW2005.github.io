@@ -6,4 +6,4 @@ document.getElementById("zoomPlus").addEventListener('click', function () { Modu
 document.getElementById("w").addEventListener('click', function () { Module.ccall('w', null, null, null); });
 document.getElementById("a").addEventListener('click', function () { Module.ccall('a', null, null, null); });
 document.getElementById("s").addEventListener('click', function () { Module.ccall('s', null, null, null); });
-document.getElementById("d").addEventListener('click', function () { Module.ccall('d', null, null, null); });
+document.getElementById("d").addEventListener('click', function () { Module.ccall('d', null, null, null);  });

@@ -208,8 +208,9 @@ void game()
         },
         span.count(), max_iterations, rangeX, rangeY, middleX, middleY);
 
-#endif
+#else
     SDL_SetWindowTitle(window, title);
+#endif
 
     SDL_RenderPresent(renderer);
 
@@ -284,13 +285,13 @@ int main(int argc, char **argv)
     }
     SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, 0, &window, &renderer);
     sprintf(title, "SPF: X s | %d Iterations | Rel = %f, Img = %f | x = %f y = %f | H for Help", max_iterations, rangeX, rangeY, middleX, middleY);
-    SDL_SetWindowTitle(window, title);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xff);
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
 #ifdef __EMSCRIPTEN__
     emscripten_set_main_loop(game, 0, 1);
 #else
+    SDL_SetWindowTitle(window, title);
     while (run)
         game();
 #endif
