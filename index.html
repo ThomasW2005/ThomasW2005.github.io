@@ -5,17 +5,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Thomas Weichhart</title>
     <script type="text/javascript" src="animatedTitle.js"></script>
     <script type="text/javascript" src="script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <title>"1 2 3"</title>
 </head>
 
 <body>
     <main>
-        <button onclick="typeTitle()">Start Animating Title</button>
-        <button onclick="clearInterval(typeTitle)">Stop Animating Title</button>
+        <button onclick="typeTitle()">Start Typing Title</button>
+        <button onclick="scrollTitle()">Start Scrolling Title</button>
+        <button onclick="restoreTitle()">Stop Animating Title</button>
         <a href="mandelbrot_wasm\main.html" class="but">Mandelbrot WASM</a>
     </main>
 </body>
