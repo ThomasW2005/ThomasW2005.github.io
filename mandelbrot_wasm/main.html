@@ -10,22 +10,28 @@
 </head>
 
 <body>
-    <button id="incIterations">Increase Iterations</button>
-    <button id="decIterations">Decrease Iterations</button>
-    <button id="changeColor">Change Coloring</button> <br>
-    <button id="w">↑</button>
-    <button id="a">←</button>
-    <button id="s">↓</button>
-    <button id="d">→</button>
-    <button id="zoomPlus">Zoom +</button>
-    <button id="zoomMinus">Zoom -</button>
+    <div class="container">
+        <button id="changeColor">Change Coloring</button>
+        <button id="incIterations">Iterations +</button>
+        <button id="decIterations">Iterations -</button>
+        <button id="w">↑</button>
+        <button id="a">←</button>
+        <button id="s">↓</button>
+        <button id="d">→</button>
+        <button id="zoomPlus">Zoom +</button>
+        <button id="zoomMinus">Zoom -</button>
+    </div>
+
     <br />
+
     <div class="infoText">
         SPF: <span id="_spf"></span>s, <span id="_iterations">16</span> Iterations, Rel = <span id="_rangex"></span>,
         Img =
         <span id="_rangey"></span>, x = <span id="_middlex"></span>, y = <span id="_middley"></span>, Press H for help
     </div>
+
     <canvas id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+
     <script type='text/javascript'>
 
         var Module = {
@@ -36,6 +42,7 @@
         };
 
     </script>
+
     <script async type="text/javascript" src="main.js"></script>
 </body>
 
