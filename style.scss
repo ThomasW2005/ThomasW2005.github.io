@@ -1,10 +1,11 @@
 html {
-  height: 100%;
   display: flex;
+  height: 100%;
 }
 body {
   position: relative;
   margin: auto;
+  margin-top: 15vh;
   background: #181620;
   perspective: 500px;
 }
@@ -12,15 +13,24 @@ body {
 main {
   display: flex;
   flex-direction: column;
-  transform: rotatex(10deg);
-  animation: rotateAngle 6s linear infinite;
 }
 
-.but{
+.hrefs{
   text-decoration:none;
   text-align:center; 
   color: inherit;
-  // vertical-align:middle;
+}
+
+.medialinks{
+  display: flex;
+  justify-content: center;
+  margin-top: 20vh;
+}
+
+.elements{
+  flex-direction: column;
+  margin-right: 25px;
+  margin-left: 25px;
 }
 
 button, .but {
@@ -88,26 +98,6 @@ button, .but {
   &:hover:after {
     --z: -0.06;
     animation: translateWobble 2.2s ease forwards;
-  }
-}
-
-@keyframes rotateAngle {
-  0% {
-    transform: rotateY(0deg) rotateX(10deg);
-    animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1);
-  }
-  25% {
-    transform: rotateY(20deg) rotateX(10deg);
-  }
-  50% {
-    transform: rotateY(0deg) rotateX(10deg);
-    animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1);
-  }
-  75% {
-    transform: rotateY(-20deg) rotateX(10deg);
-  }
-  100% {
-    transform: rotateY(0deg) rotateX(10deg);
   }
 }
 
