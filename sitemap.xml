@@ -5,11 +5,14 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
-
 <url>
   <loc>https://thomasweichhart.tk/</loc>
-  <lastmod>2021-07-31T20:07:55+00:00</lastmod>
 </url>
-
+<url>
+  <loc>https://thomasweichhart.tk/mandelbrot_wasm/main.html</loc>
+</url>
+<url>
+  <loc>https://thomasweichhart.tk/sinus_wasm/main.html</loc>
+</url>
 
 </urlset>
