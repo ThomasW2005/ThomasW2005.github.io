@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" autocomplete="on" method="POST">
+
+        <label for="frmNameA">Name</label>
+        <input type="text" name="name" id="frmNameA" placeholder="Full name" required autocomplete="name">
+        
+        <label for="frmEmailA">Email</label>
+        <input type="email" name="email" id="frmEmailA" placeholder="name@example.com" required autocomplete="email">
+        
+        <!-- note that "emailC" will not be autocompleted -->
+        <label for="frmEmailC">Confirm Email</label>
+        <input type="email" name="emailC" id="frmEmailC" placeholder="name@example.com" required autocomplete="email">
+        
+        <label for="cc-number">Phone</label>
+        <input type="cc-number" name="cc-number " id="cc-number" placeholder="+1-555-555-1212" required autocomplete="cc-number">
+        </form>
+</body>
+</html>
